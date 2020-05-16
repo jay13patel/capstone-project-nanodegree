@@ -2,12 +2,12 @@ pipeline {
 	agent any
 	stages {
 
-		stage('Create kubernetes cluster') {
+		stage('Create kubernetes') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'ecr_credentials') {
+				withAWS(region:'us-east-1', credentials:'eks-cred') {
 					sh '''
 						eksctl create cluster \
-						--name capstonecluster \
+						--name finalcluster \
 						--version 1.13 \
 						--nodegroup-name standard-workers \
 						--node-type t2.small \
@@ -26,11 +26,11 @@ pipeline {
 
 		
 
-		stage('Create conf file cluster') {
+		stage('Create conf file ') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'ecr_credentials') {
+				withAWS(region:'us-east-1', credentials:'eks-cred') {
 					sh '''
-						aws eks --region us-east-1 update-kubeconfig --name capstonecluster
+						aws eks --region us-east-1 update-kubeconfig --name finalcluster
 					'''
 				}
 			}
