@@ -27,7 +27,7 @@ pipeline {
 						 docker push jay13patel/capstone
 
 					'''
-  
+  			}
 
       }
     }
